@@ -4,6 +4,7 @@
   imports = [
     ./modules/cli.nix
     ./modules/direnv.nix
+    ./modules/fonts.nix
     ./modules/git.nix
     ./modules/nvim.nix
     ./modules/shell.nix
