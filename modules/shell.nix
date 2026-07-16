@@ -17,15 +17,26 @@
       share = true;
     };
 
-    shellAliases = {
-      g = "git";
-      lg = "lazygit";
-      v = "nvim";
-      ".." = "cd ..";
-      "..." = "cd ../..";
-      # Rebuild the home environment from this repo.
-      hms = "home-manager switch --flake ~/dotfiles";
-    };
+  };
+
+  # Shared by bash and zsh.
+  home.shellAliases = {
+    g = "git";
+    lg = "lazygit";
+    v = "nvim";
+    ".." = "cd ..";
+    "..." = "cd ../..";
+    # Rebuild the home environment from this repo.
+    hms = "home-manager switch --flake ~/dotfiles";
+
+    # alembic / project runners (ported from Arch, pdm → uv)
+    alr = "uv run alembic revision --autogenerate -m";
+    alrm = "uv run alembic revision -m";
+    alu = "uv run alembic upgrade head";
+    pst = "uv run start";
+    mcpst = "uv run python -m mcp_servers.http_server";
+    nst = "npm run start";
+    md2pdf = "pandoc -d defaults";
   };
 
   # Keep bash usable too — same session vars, and hand off to zsh-aware tools.

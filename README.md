@@ -20,6 +20,15 @@ nix run home-manager -- switch --flake ~/dotfiles#francois
 # 4. Make zsh the login shell
 echo "$HOME/.nix-profile/bin/zsh" | sudo tee -a /etc/shells
 chsh -s "$HOME/.nix-profile/bin/zsh"
+
+# 5. Headless/WSL only: seed a blank-password keyring (one-time; a machine
+#    with a real login session unlocks via PAM instead and can skip this)
+systemctl --user stop gnome-keyring
+printf '[keyring]\ndisplay-name=Default keyring\nctime=0\nmtime=0\nlock-on-idle=false\nlock-after=false\n' \
+  > ~/.local/share/keyrings/Default_keyring.keyring
+printf 'Default_keyring' > ~/.local/share/keyrings/default
+chmod 600 ~/.local/share/keyrings/Default_keyring.keyring
+systemctl --user start gnome-keyring
 ```
 
 Open a new terminal. Done — nvim config auto-clones to `~/.config/nvim` on first switch.

@@ -7,5 +7,6 @@
 
   home.packages = with pkgs; [
     nerd-fonts._3270
+    noto-fonts # mainfont for pandoc/typst PDFs
   ];
 }

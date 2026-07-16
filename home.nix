@@ -6,7 +6,10 @@
     ./modules/direnv.nix
     ./modules/fonts.nix
     ./modules/git.nix
+    ./modules/keyring.nix
+    ./modules/kubernetes.nix
     ./modules/nvim.nix
+    ./modules/pandoc.nix
     ./modules/shell.nix
   ];
 

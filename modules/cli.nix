@@ -3,10 +3,16 @@
 {
   home.packages = with pkgs; [
     fd
+    glow
     jq
     ripgrep
     unzip
+    uv
     wget
+
+    # AI coding agents — non-negotiable on any machine.
+    claude-code
+    opencode
   ];
 
   # cat with syntax highlighting; also used as man pager below.
