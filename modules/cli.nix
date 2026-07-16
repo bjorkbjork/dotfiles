@@ -35,6 +35,7 @@
     escapeTime = 10;
     terminal = "tmux-256color";
     historyLimit = 50000;
+    shell = "${pkgs.zsh}/bin/zsh";
     extraConfig = ''
       # True color passthrough for nvim.
       set -ga terminal-overrides ",*256col*:Tc"
