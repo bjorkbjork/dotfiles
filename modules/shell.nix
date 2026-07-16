@@ -7,6 +7,16 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
+    initContent = ''
+      # Case-insensitive tab completion (glow r<Tab> → README.md)
+      zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+    '';
+
+    oh-my-zsh = {
+      enable = true;
+      plugins = [ "git" ];
+    };
+
     defaultKeymap = "emacs"; # readline-style keys, same as bash
 
     history = {
