@@ -18,6 +18,8 @@
     inputs.albafetch.packages.${pkgs.system}.default
   ];
 
+  xdg.configFile."albafetch.conf".source = ../files/albafetch.conf;
+
   # cat with syntax highlighting; also used as man pager below.
   programs.bat.enable = true;
 
