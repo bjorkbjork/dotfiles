@@ -15,6 +15,11 @@
       url = "github:bjorkbjork/nvim-config";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    albafetch = {
+      url = "github:alba4k/albafetch";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { nixpkgs, home-manager, ... }@inputs:

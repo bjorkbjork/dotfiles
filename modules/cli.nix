@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 {
   home.packages = with pkgs; [
@@ -13,6 +13,9 @@
     # AI coding agents — non-negotiable on any machine.
     claude-code
     opencode
+
+    # Beloved fetch greeter (runs on shell start, see shell.nix).
+    inputs.albafetch.packages.${pkgs.system}.default
   ];
 
   # cat with syntax highlighting; also used as man pager below.

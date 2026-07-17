@@ -10,6 +10,9 @@
     initContent = ''
       # Case-insensitive tab completion (glow r<Tab> → README.md)
       zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
+      # Shell greeting, as tradition demands (was line 1 of the old .bashrc).
+      albafetch
     '';
 
     oh-my-zsh = {
