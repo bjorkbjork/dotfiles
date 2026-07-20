@@ -8,6 +8,10 @@
     kubectl
     kubectx # also provides kubens
     kubernetes-helm
+
+    # AKS access: kubeconfig contexts authenticate via kubelogin + az.
+    azure-cli
+    kubelogin
   ];
 
   xdg.configFile."k9s/aliases.yaml".source = ../files/k9s/aliases.yaml;
