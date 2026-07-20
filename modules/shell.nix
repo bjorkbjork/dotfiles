@@ -92,7 +92,7 @@
         staged = "[ + $count](bold #00e676)"; # bright green
         modified = "[ • $count](bold #ff8c00)"; # orange — unstaged
         deleted = "[ - $count](#8b0000)"; # dark red
-        untracked = "[ ⌀$ count](#5fafff)";
+        untracked = "[ ⌀ $count](#5fafff)";
         ahead = "[ ⇡ $count](green)";
         behind = "[ ⇣ $count](red)";
         diverged = "[ ⇡ $ahead_count⇣ $behind_count](yellow)";
