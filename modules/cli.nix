@@ -16,6 +16,9 @@
 
     # Beloved fetch greeter (runs on shell start, see shell.nix).
     inputs.albafetch.packages.${pkgs.system}.default
+
+    # beads (bd) — issue tracking used across the Atlastix monorepo.
+    inputs.beads.packages.${pkgs.system}.default
   ];
 
   xdg.configFile."albafetch.conf".source = ../files/albafetch.conf;

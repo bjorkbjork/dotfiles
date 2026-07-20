@@ -21,6 +21,26 @@
         "type": "github"
       }
     },
+    "beads": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1784495005,
+        "narHash": "sha256-z1s9fShpJlenaSYZc3oujJGlf0dhGlc2vTDdCtnILw0=",
+        "owner": "gastownhall",
+        "repo": "beads",
+        "rev": "f9b20203e851a48c976cfd0e155b413dd80cb5cf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gastownhall",
+        "repo": "beads",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "inputs": {
         "systems": "systems"
@@ -117,6 +137,7 @@
     "root": {
       "inputs": {
         "albafetch": "albafetch",
+        "beads": "beads",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "nvim-config": "nvim-config"

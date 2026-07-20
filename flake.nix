@@ -20,6 +20,12 @@
       url = "github:alba4k/albafetch";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # beads (bd) — issue tracker for AI-supervised coding workflows.
+    beads = {
+      url = "github:gastownhall/beads";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { nixpkgs, home-manager, ... }@inputs:
