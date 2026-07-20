@@ -55,48 +55,70 @@
   # Keep bash usable too — same session vars, and hand off to zsh-aware tools.
   programs.bash.enable = true;
 
-  # Full lambda prompt (faithful to the oh-my-bash setup on the old laptop):
-  #   ╭─ 👨🏼‍💻 francois at 💻 host in 📂 ~/…/repo on ( branch {2} •11 ⌀45 ✗)
+  # Full lambda prompt, faithful to the oh-my-bash lambda theme source
+  # (OMB color names are ANSI slots: bold_brown=red, bold_teal=teal/cyan,
+  # bold_olive=yellow — the old Konsole palette did the rest):
+  #   ╭─ 👨🏼‍💻 francois at 💻 host in 📂 ~/…/repo on (🌿 branch {2} •11 ⌀45 ✗)
   #   ╰λ
+  # Status lives INSIDE the parens; custom modules provide the always-closing
+  # paren and the ✓/✗ clean/dirty flag, which stock git_status cannot do.
   programs.starship = {
     enable = true;
     settings = {
       add_newline = true;
-      format = "[╭─](dim white) 👨🏼‍💻 $username[at](dim white) 💻 $hostname[in](dim white) 📂 $directory$git_branch$git_status$cmd_duration$line_break[╰λ](bold white)$character ";
+      format = "[╭─](white) 👨🏼‍💻 $username[at](white) 💻 $hostname[in](white) 📂 $directory$git_branch$git_status\${custom.git_dirty}\${custom.git_clean}\${custom.git_close}$cmd_duration$line_break[╰λ](bold white)$character ";
+
+      # The monorepo is big; the 500ms default silently drops status counters.
+      command_timeout = 2000;
 
       username = {
         show_always = true;
-        format = "[$user](bold red) ";
+        format = "[$user](bold red) "; # OMB bold_brown
       };
       hostname = {
         ssh_only = false;
-        format = "[$hostname](bold #228b22) "; # forest green
+        format = "[$hostname](bold #4ec9b0) "; # OMB bold_teal as it looked on Monalyte
       };
       directory = {
-        style = "bold #39ff14"; # neon green
+        style = "bold green";
         truncation_length = 3;
         truncation_symbol = "…/";
         truncate_to_repo = false;
         format = "[$path]($style)[$read_only](red) ";
       };
       git_branch = {
-        # Self-closing parens — git_status renders nothing on a clean repo,
-        # so it can't be trusted to close a paren opened here.
-        format = "[on](dim white) [\\( $branch\\)](bold purple) ";
+        format = "[on](white) [\\(](white)🌿 [$branch](white)";
       };
-      # {stashes} +staged •modified -deleted ⌀untracked ⇡⇣ — ✗ shows whenever
-      # the module renders at all, i.e. whenever there is anything to report.
+      # (🌿 branch {stash} +staged •unstaged -deleted ⌀untracked ↑↓ ✗|✓)
       git_status = {
-        format = "$stashed$staged$modified$deleted$untracked$ahead_behind$conflicted[ ✗](bold red) ";
-        stashed = "[ \\{$count\\}](dim white)";
-        staged = "[ + $count](bold #00e676)"; # bright green
-        modified = "[ • $count](bold #ff8c00)"; # orange — unstaged
-        deleted = "[ - $count](#8b0000)"; # dark red
-        untracked = "[ ⌀ $count](#5fafff)";
-        ahead = "[ ⇡ $count](green)";
-        behind = "[ ⇣ $count](red)";
-        diverged = "[ ⇡ $ahead_count⇣ $behind_count](yellow)";
+        format = "$stashed$staged$modified$deleted$untracked$ahead_behind$conflicted";
+        stashed = "[ \\{$count\\}](white)";
+        staged = "[ +$count](bold green)";
+        modified = "[ •$count](bold yellow)"; # OMB bold_olive
+        deleted = "[ -$count](red)";
+        untracked = "[ ⌀$count](white)";
+        ahead = "[ ↑$count](bold green)";
+        behind = "[ ↓$count](red)"; # OMB brown
+        diverged = "[ ↑$ahead_count↓$behind_count](yellow)";
         conflicted = "[ =$count](bold red)";
+      };
+      custom.git_dirty = {
+        when = "test -n \"$(git status --porcelain 2>/dev/null)\"";
+        require_repo = true;
+        command = "";
+        format = "[ ✗](red)";
+      };
+      custom.git_clean = {
+        when = "test -z \"$(git status --porcelain 2>/dev/null)\"";
+        require_repo = true;
+        command = "";
+        format = "[ ✓](bold green)";
+      };
+      custom.git_close = {
+        when = "true";
+        require_repo = true;
+        command = "";
+        format = "[\\)](white) ";
       };
       cmd_duration = {
         min_time = 2000;
