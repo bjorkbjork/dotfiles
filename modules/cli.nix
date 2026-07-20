@@ -59,6 +59,10 @@
       bind l select-pane -R
 
       # WSL: land copies on the Windows clipboard (y or mouse-drag in copy mode).
+      # vim muscle memory: v begins selection (tmux default is Space; v is
+      # rectangle-toggle — pressing v, moving, then y copies NOTHING and
+      # clobbers the clipboard with an empty string).
+      bind -T copy-mode-vi v send -X begin-selection
       set -s copy-command "clip.exe"
       bind -T copy-mode-vi y send -X copy-pipe-and-cancel "clip.exe"
       bind -T copy-mode-vi MouseDragEnd1Pane send -X copy-pipe-and-cancel "clip.exe"
