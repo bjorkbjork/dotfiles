@@ -46,7 +46,7 @@
     alr = "uv run alembic revision --autogenerate -m";
     alrm = "uv run alembic revision -m";
     alu = "uv run alembic upgrade head";
-    pst = "uv run start";
+    ust = "uv run start";
     mcpst = "uv run python -m mcp_servers.http_server";
     nst = "npm run start";
     md2pdf = "pandoc -d defaults";
@@ -55,52 +55,56 @@
   # Keep bash usable too — same session vars, and hand off to zsh-aware tools.
   programs.bash.enable = true;
 
-  # Two-line lambda prompt (nod to oh-my-bash lambda / lambda-mod):
-  #   λ francois@host ~/dotfiles (main) [⇡1 +2 !1 ?3] took 4s
-  #   ›
+  # Full lambda prompt (faithful to the oh-my-bash setup on the old laptop):
+  #   ╭─ 👨🏼‍💻 francois at 💻 host in 📂 ~/…/repo on ( branch {2} •11 ⌀45 ✗)
+  #   ╰λ
   programs.starship = {
     enable = true;
     settings = {
       add_newline = true;
-      format = "[λ](bold yellow) $username$hostname$directory$git_branch$git_status$cmd_duration$line_break$character";
+      format = "[╭─](dim white) 👨🏼‍💻 $username[at](dim white) 💻 $hostname[in](dim white) 📂 $directory$git_branch$git_status$cmd_duration$line_break[╰λ](bold yellow)$character ";
 
       username = {
         show_always = true;
-        format = "[$user](bold blue)";
+        format = "[$user](bold red) ";
       };
       hostname = {
         ssh_only = false;
-        format = "[@$hostname](blue) ";
+        format = "[$hostname](bold #228b22) "; # forest green
       };
       directory = {
-        style = "bold cyan";
-        truncation_length = 6;
+        style = "bold #39ff14"; # neon green
+        truncation_length = 3;
+        truncation_symbol = "…/";
         truncate_to_repo = false;
         format = "[$path]($style)[$read_only](red) ";
       };
       git_branch = {
-        format = "[\\($branch\\)](bold purple) ";
+        # Self-closing parens — git_status renders nothing on a clean repo,
+        # so it can't be trusted to close a paren opened here.
+        format = "[on](dim white) [\\( $branch\\)](bold purple) ";
       };
-      # [⇡ahead ⇣behind =conflicted ✘deleted $stashed +staged !modified ?untracked]
+      # {stashes} +staged •modified -deleted ⌀untracked ⇡⇣ — ✗ shows whenever
+      # the module renders at all, i.e. whenever there is anything to report.
       git_status = {
-        format = "([\\[$ahead_behind$conflicted$deleted$stashed$staged$modified$untracked\\]](dim white) )";
-        ahead = "[⇡$count ](green)";
-        behind = "[⇣$count ](red)";
-        diverged = "[⇡$ahead_count⇣$behind_count ](yellow)";
-        conflicted = "[=$count ](red)";
-        deleted = "[✘$count ](red)";
-        stashed = "[\\$$count ](white)";
-        staged = "[+$count ](green)";
-        modified = "[!$count ](yellow)";
-        untracked = "[?$count ](blue)";
+        format = "$stashed$staged$modified$deleted$untracked$ahead_behind$conflicted[ ✗](bold red) ";
+        stashed = "[ \\{$count\\}](dim white)";
+        staged = "[ +$count](bold #00e676)"; # bright green
+        modified = "[ •$count](bold #ff8c00)"; # orange — unstaged
+        deleted = "[ -$count](#8b0000)"; # dark red
+        untracked = "[ ⌀$count](#5fafff)";
+        ahead = "[ ⇡$count](green)";
+        behind = "[ ⇣$count](red)";
+        diverged = "[ ⇡$ahead_count⇣$behind_count](yellow)";
+        conflicted = "[ =$count](bold red)";
       };
       cmd_duration = {
         min_time = 2000;
         format = "took [$duration](bold yellow) ";
       };
       character = {
-        success_symbol = "[›](bold green)";
-        error_symbol = "[›](bold red)";
+        success_symbol = ""; # λ is part of format; no extra char
+        error_symbol = "[✘](bold red)";
       };
 
       # Trim latency: skip slow modules we don't need in the prompt.
