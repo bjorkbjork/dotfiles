@@ -72,8 +72,19 @@
       # mouse. TUIs run on the alternate screen, so this captures what is
       # currently displayed.
       bind Y run-shell "tmux capture-pane -p -S -1000 | clip.exe"
+
+      # Prefix+m: toggle tmux mouse capture. Off = Windows Terminal handles
+      # drag/Ctrl+C natively on the visible screen; on = tmux scroll/copy-mode.
+      bind m set -g mouse \; display "mouse: #{?mouse,on,off}"
       bind -T copy-mode-vi y send -X copy-pipe-and-cancel "clip.exe"
       bind -T copy-mode-vi MouseDragEnd1Pane send -X copy-pipe-and-cancel "clip.exe"
+
+      # devenv's TUI grabs the mouse but implements no selection/copy (unlike
+      # claude/nvim, which do their own OSC 52 copy). Forward mouse to apps
+      # that grab it EXCEPT devenv — there, tmux takes the drag: highlight,
+      # release, and it's on the Windows clipboard. Wheel still reaches the
+      # TUI for native log scrolling.
+      bind -n MouseDrag1Pane if -F '#{||:#{pane_in_mode},#{&&:#{mouse_any_flag},#{!=:#{pane_current_command},devenv}}}' { send-keys -M } { copy-mode -M }
     '';
   };
 
