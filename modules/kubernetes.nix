@@ -6,6 +6,7 @@
   home.packages = with pkgs; [
     k9s
     kubectl
+    kubectx # also provides kubens
     kubernetes-helm
   ];
 
