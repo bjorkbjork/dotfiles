@@ -10,6 +10,7 @@
     ./modules/kubernetes.nix
     ./modules/nvim.nix
     ./modules/pandoc.nix
+    ./modules/prompt.nix
     ./modules/shell.nix
   ];
 
