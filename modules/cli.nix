@@ -57,6 +57,11 @@
       bind j select-pane -D
       bind k select-pane -U
       bind l select-pane -R
+
+      # WSL: land copies on the Windows clipboard (y or mouse-drag in copy mode).
+      set -s copy-command "clip.exe"
+      bind -T copy-mode-vi y send -X copy-pipe-and-cancel "clip.exe"
+      bind -T copy-mode-vi MouseDragEnd1Pane send -X copy-pipe-and-cancel "clip.exe"
     '';
   };
 
