@@ -62,7 +62,7 @@
     enable = true;
     settings = {
       add_newline = true;
-      format = "[╭─](dim white) 👨🏼‍💻 $username[at](dim white) 💻 $hostname[in](dim white) 📂 $directory$git_branch$git_status$cmd_duration$line_break[╰λ](bold yellow)$character ";
+      format = "[╭─](dim white) 👨🏼‍💻 $username[at](dim white) 💻 $hostname[in](dim white) 📂 $directory$git_branch$git_status$cmd_duration$line_break[╰λ](bold white)$character ";
 
       username = {
         show_always = true;
@@ -89,13 +89,13 @@
       git_status = {
         format = "$stashed$staged$modified$deleted$untracked$ahead_behind$conflicted[ ✗](bold red) ";
         stashed = "[ \\{$count\\}](dim white)";
-        staged = "[ +$count](bold #00e676)"; # bright green
-        modified = "[ •$count](bold #ff8c00)"; # orange — unstaged
-        deleted = "[ -$count](#8b0000)"; # dark red
-        untracked = "[ ⌀$count](#5fafff)";
-        ahead = "[ ⇡$count](green)";
-        behind = "[ ⇣$count](red)";
-        diverged = "[ ⇡$ahead_count⇣$behind_count](yellow)";
+        staged = "[ + $count](bold #00e676)"; # bright green
+        modified = "[ • $count](bold #ff8c00)"; # orange — unstaged
+        deleted = "[ - $count](#8b0000)"; # dark red
+        untracked = "[ ⌀$ count](#5fafff)";
+        ahead = "[ ⇡ $count](green)";
+        behind = "[ ⇣ $count](red)";
+        diverged = "[ ⇡ $ahead_count⇣ $behind_count](yellow)";
         conflicted = "[ =$count](bold red)";
       };
       cmd_duration = {
